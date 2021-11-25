@@ -68,6 +68,22 @@ class HSCode(models.Model):
     ]
 
     @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        if args is None:
+            args = []
+
+        records = self.browse()
+        if len(name) == 8:
+            records = self.search([('local_code', '=', name)] + args, limit=limit)
+
+        search_domain = [('description', operator, name)]
+        if records:
+            search_domain.append(('id', 'not in', records.ids))
+        records += self.search(search_domain + args, limit=limit)
+
+        return [(record.id, record.display_name) for record in records]
+
+    @api.model
     def create(self, vals):
         if vals.get('local_code'):
             vals['local_code'] = vals['local_code'].replace(' ', '')

@@ -27,3 +27,5 @@ class ProductCategory(models.Model):
         else:
             res = self.env['hs.code']
         return res
+
+    
