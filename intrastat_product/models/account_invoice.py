@@ -24,12 +24,12 @@ class AccountInvoice(models.Model):
         comodel_name='res.country',
         string='Origin/Destination Country',
         compute='_compute_intrastat_country',
-        store=True, compute_sudo=True,
+        store=False, compute_sudo=True,
         help="Destination country for dispatches. Origin country for "
         "arrivals.")
     intrastat_country = fields.Boolean(
         compute='_compute_intrastat_country', string='Intrastat Country',
-        store=True, readonly=True, compute_sudo=True)
+        store=False, readonly=True, compute_sudo=True)
     src_dest_region_id = fields.Many2one(
         comodel_name='intrastat.region',
         string='Origin/Destination Region',
